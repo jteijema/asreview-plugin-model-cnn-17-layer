@@ -4,7 +4,7 @@ from setuptools import find_namespace_packages
 setup(
     name='asreview-plugin-model-cnn-17-layer',
     version='0.1',
-    description='The extention that adds a new cnn classifier',
+    description='The plugin that adds a new cnn classifier',
     url='https://github.com/JTeijema/asreview-plugin-model-cnn-17-layer',
     author='ASReview team, Jelle Teijema',
     author_email='j.j.teijema@gmail.com',
