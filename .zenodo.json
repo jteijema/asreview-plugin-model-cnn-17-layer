@@ -26,7 +26,7 @@
 		"text-classification",
 		"cnn-keras",
 		"active learning",
-		"machine learning",
+		"machine learning"
 	],
 	"related_identifiers": [
 		{
@@ -34,6 +34,6 @@
 		 	"identifier": "https://doi.org/10.5281/zenodo.3345592"
 		}
 	],
-	"license": "MIT",
+	"license": "Apache License 2.0",
 	"upload_type": "software"
 }
