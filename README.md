@@ -16,7 +16,10 @@ python -m pip install git+https://github.com/JTeijema/asreview-plugin-model-cnn-
 ```
 
 ## Usage
-The new classifier model can be used with `-m power_cnn`.
+The new convolutional neural network is implemented in [`asreviewcontrib/models/cnn.py`](asreviewcontrib/models/cnn.py) , usable with `-m power_cnn`:
+```bash
+asreview simulate benchmark:van_de_Schoot_2017 -m power_cnn -e doc2vec
+```
 
 
 ## License
