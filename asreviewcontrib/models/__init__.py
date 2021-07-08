@@ -1,0 +1,1 @@
+from asreviewcontrib.models.cnn import POWER_CNN

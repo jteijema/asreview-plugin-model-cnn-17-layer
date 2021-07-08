@@ -1,0 +1,40 @@
+{
+	"description": "This plugin for ASReview adds a keras-cnn based classifier.",
+	"title": "ASReview CNN 17 layer model plugin",
+	"creators": [{
+			"name": "Teijema, Jelle",
+			"affiliation": "Applied Data Science, Utrecht University, Utrecht, the Netherlands",
+			"orcid": "0000-0001-9282-4311"
+		}
+	],
+	"contributors": [
+		{
+			"name": "Hofstee, Laura",
+			"affiliation": "Department of Research and Data Management Services, Information Technology Services, Utrecht University, Utrecht, the Netherlands",
+			"orcid": "0000-0001-9638-7657",
+			"type": "Supervisor" 
+		},
+		{
+			"name": "Bagheri, Ayoub",
+			"affiliation": "Department of Research and Data Management Services, Information Technology Services, Utrecht University, Utrecht, the Netherlands",
+			"orcid": "0000-0001-6366-2173",
+			"type": "Supervisor" 
+		}
+	],
+	"keywords": [
+		"ASReview",
+		"text-classification",
+		"cnn-keras",
+		"active learning",
+		"machine learning",
+		"KEYWORD"
+	],
+	"related_identifiers": [
+		{
+			"relation": "isSupplementTo",
+		 	"identifier": "https://doi.org/10.5281/zenodo.3345592"
+		}
+	],
+	"license": "MIT",
+	"upload_type": "software"
+}
