@@ -16,7 +16,7 @@ python -m pip install git+https://github.com/JTeijema/asreview-plugin-model-cnn-
 ```
 
 ## Usage
-The new classifiermodel can be used with `-m power_cnn`
+The new classifier model can be used with `-m power_cnn`.
 
 
 ## License
