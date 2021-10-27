@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import scipy
+import os
+import tensorflow as tf
 
 from tensorflow.keras import Sequential
 from tensorflow.keras import layers
@@ -25,15 +26,13 @@ from tensorflow.keras import backend
 from math import ceil
 
 from asreview.models.classifiers.base import BaseTrainClassifier
-from asreview.utils import _set_class_weight
 
 
 class POWER_CNN(BaseTrainClassifier):
 
     name = "power_cnn"
 
-    def __init__(self, verbose = 1, patience=15, min_delta = 0.025):
-
+    def __init__(self, verbose=1, patience=15, min_delta=0.025):
         """Initialize the conv neural network model."""
         super(POWER_CNN, self).__init__()
         self.patience = patience
@@ -57,14 +56,20 @@ class POWER_CNN(BaseTrainClassifier):
         ╚═════╝╚═╝  ╚═══╝╚═╝  ╚═══╝        
  
  """)
-    
 
     def fit(self, X, y):
 
- 
+        tf.config.threading.set_intra_op_parallelism_threads(1)
+        tf.config.threading.set_inter_op_parallelism_threads(1)
+        tf.config.set_soft_device_placement(True)
+
         self._model = KerasClassifier(_create_dense_nn_model(X.shape[1]))
-        callback = callbacks.EarlyStopping(min_delta = self.min_delta, monitor='loss', patience=self.patience, restore_best_weights=True)
-        
+        # callback = callbacks.EarlyStopping(
+        # min_delta=self.min_delta,
+        # monitor='loss',
+        # patience=self.patience,
+        # restore_best_weights=True)
+
         print("\n Fitting New Iteration:\n")
         self._model.fit(
             _format(X),
@@ -72,14 +77,16 @@ class POWER_CNN(BaseTrainClassifier):
             batch_size=ceil(X.shape[0]/20),
             epochs=100,
             shuffle=True,
-            callbacks=[callback],
+            # callbacks=[callback],
             verbose=self.verbose,)
 
     def predict_proba(self, X):
         return self._model.predict_proba(_format(X))
 
+
 def _format(X):
-        return X.reshape((X.shape[0],X.shape[1],1))
+    return X.reshape((X.shape[0], X.shape[1], 1))
+
 
 def _create_dense_nn_model(_size):
 
@@ -89,17 +96,21 @@ def _create_dense_nn_model(_size):
 
         model = Sequential()
 
-        model.add(layers.SeparableConv1D(input_shape = (_size, 1), filters = 256, kernel_size = 5, padding = 'valid'))
+        model.add(layers.SeparableConv1D(input_shape=(_size, 1),
+                  filters=256, kernel_size=5, padding='valid'))
         model.add(layers.Activation(activations.relu))
-        model.add(layers.SeparableConv1D(filters = 256, kernel_size = 5, padding = 'valid'))
+        model.add(layers.SeparableConv1D(
+            filters=256, kernel_size=5, padding='valid'))
         model.add(layers.Activation(activations.relu))
-        model.add(layers.MaxPooling1D(pool_size = 2, padding = 'valid'))
+        model.add(layers.MaxPooling1D(pool_size=2, padding='valid'))
 
-        model.add(layers.SeparableConv1D(filters = 256, kernel_size = 3, padding = 'valid'))
+        model.add(layers.SeparableConv1D(
+            filters=256, kernel_size=3, padding='valid'))
         model.add(layers.Activation(activations.relu))
-        model.add(layers.SeparableConv1D(filters = 256, kernel_size = 3, padding = 'valid'))
+        model.add(layers.SeparableConv1D(
+            filters=256, kernel_size=3, padding='valid'))
         model.add(layers.Activation(activations.relu))
-        model.add(layers.MaxPooling1D(pool_size = 2, padding = 'valid'))
+        model.add(layers.MaxPooling1D(pool_size=2, padding='valid'))
         model.add(layers.Dropout(rate=0.5))
 
         model.add(layers.Flatten())
