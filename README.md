@@ -5,7 +5,7 @@ This repository contains a plugin for [ASReview](https://github.com/asreview) ![
 
 ## Getting started
 
-Install the new classifier with:
+The packaged is called `asreview-plugin-model-cnn-17-layer` and can be installed with:
 
 ```bash
 pip install .
