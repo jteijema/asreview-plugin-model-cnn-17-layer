@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
+from math import ceil
 import tensorflow as tf
 
 from tensorflow.keras import Sequential
@@ -22,8 +22,6 @@ from tensorflow.keras import optimizers
 from keras.wrappers.scikit_learn import KerasClassifier
 from tensorflow.keras import callbacks
 from tensorflow.keras import backend
-
-from math import ceil
 
 from asreview.models.classifiers.base import BaseTrainClassifier
 
@@ -59,16 +57,16 @@ class POWER_CNN(BaseTrainClassifier):
 
     def fit(self, X, y):
 
-        tf.config.threading.set_intra_op_parallelism_threads(1)
-        tf.config.threading.set_inter_op_parallelism_threads(1)
-        tf.config.set_soft_device_placement(True)
+        #tf.config.threading.set_intra_op_parallelism_threads(1)
+        #tf.config.threading.set_inter_op_parallelism_threads(1)
+        #tf.config.set_soft_device_placement(True)
 
         self._model = KerasClassifier(_create_dense_nn_model(X.shape[1]))
-        # callback = callbacks.EarlyStopping(
-        # min_delta=self.min_delta,
-        # monitor='loss',
-        # patience=self.patience,
-        # restore_best_weights=True)
+        callback = callbacks.EarlyStopping(
+            min_delta=self.min_delta,
+            monitor='loss',
+            patience=self.patience,
+            restore_best_weights=True)
 
         print("\n Fitting New Iteration:\n")
         self._model.fit(
@@ -77,7 +75,7 @@ class POWER_CNN(BaseTrainClassifier):
             batch_size=ceil(X.shape[0]/20),
             epochs=100,
             shuffle=True,
-            # callbacks=[callback],
+            callbacks=[callback],
             verbose=self.verbose,)
 
     def predict_proba(self, X):
